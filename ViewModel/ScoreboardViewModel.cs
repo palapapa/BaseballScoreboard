@@ -32,11 +32,39 @@ public class ScoreboardViewModel : INotifyPropertyChanged
         }
     }
 
+    public int Team1Score
+    {
+        get => scoreboard.Team1Score;
+        set
+        {
+            scoreboard.Team1Score = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int Team2Score
+    {
+        get => scoreboard.Team2Score;
+        set
+        {
+            scoreboard.Team2Score = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ICommand IncreaseInningCounter { get; set; }
 
     public ICommand DecreaseInningCounter { get; set; }
 
     public ICommand SetTeamLogoSource { get; set; }
+
+    public ICommand IncreaseTeam1Score { get; set; }
+
+    public ICommand DecreaseTeam1Score { get; set; }
+
+    public ICommand IncreaseTeam2Score { get; set; }
+
+    public ICommand DecreaseTeam2Score { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -88,5 +116,9 @@ public class ScoreboardViewModel : INotifyPropertyChanged
                 }
             }
         );
+        IncreaseTeam1Score = new RelayCommand((parameter) => Team1Score++);
+        DecreaseTeam1Score = new RelayCommand((parameter) => Team1Score--, (parameter) => Team1Score > 0);
+        IncreaseTeam2Score = new RelayCommand((parameter) => Team2Score++);
+        DecreaseTeam2Score = new RelayCommand((parameter) => Team2Score--, (parameter) => Team2Score > 0);
     }
 }

@@ -13,6 +13,10 @@
     <Window.InputBindings>
         <KeyBinding Key="Up" Command="{Binding IncreaseInningCounter}"/>
         <KeyBinding Key="Down" Command="{Binding DecreaseInningCounter}"/>
+        <KeyBinding Key="D1" Command="{Binding IncreaseTeam1Score}"/>
+        <KeyBinding Key="Q" Command="{Binding DecreaseTeam1Score}"/>
+        <KeyBinding Key="D2" Command="{Binding IncreaseTeam2Score}"/>
+        <KeyBinding Key="W" Command="{Binding DecreaseTeam2Score}"/>
     </Window.InputBindings>
     <Window.Resources>
         <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
@@ -40,7 +44,7 @@
         <Image Name="Team2" Grid.Row="2" Grid.Column="0"
                Drop="TeamLogo_Drop" AllowDrop="True" Source="/Assets/Team2LogoDropPrompt.png"/>
         <Viewbox Grid.Row="0" Grid.Column="0" StretchDirection="Both" Stretch="Uniform">
-            <TextBlock Name="InningCounter" Text="{Binding Inning, Mode=OneWay}" Style="{StaticResource TextStyle}"/>
+            <TextBlock Name="InningCounter" Text="{Binding Inning}" Style="{StaticResource TextStyle}"/>
         </Viewbox>
         <Image Name="HalfInningCounter" Grid.Row="0" Grid.Column="1"
                HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -58,5 +62,11 @@
                 </Style>
             </Image.Style>
         </Image>
+        <Viewbox Grid.Row="1" Grid.Column="1" StretchDirection="Both" Stretch="Uniform">
+            <TextBlock Name="Team1Score" Text="{Binding Team1Score}" Style="{StaticResource TextStyle}"/>
+        </Viewbox>
+        <Viewbox Grid.Row="2" Grid.Column="1" StretchDirection="Both" Stretch="Uniform">
+            <TextBlock Name="Team2Score" Text="{Binding Team2Score}" Style="{StaticResource TextStyle}"/>
+        </Viewbox>
     </Grid>
 </Window>
