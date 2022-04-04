@@ -14,6 +14,15 @@
         <KeyBinding Key="Up" Command="{Binding IncreaseInningCounter}"/>
         <KeyBinding Key="Down" Command="{Binding DecreaseInningCounter}"/>
     </Window.InputBindings>
+    <Window.Resources>
+        <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="jf-openhuninn-1.1"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -31,9 +40,7 @@
         <Image Name="Team2" Grid.Row="2" Grid.Column="0"
                Drop="TeamLogo_Drop" AllowDrop="True" Source="/Assets/Team2LogoDropPrompt.png"/>
         <Viewbox Grid.Row="0" Grid.Column="0" StretchDirection="Both" Stretch="Uniform">
-            <TextBlock Name="InningCounter" Text="{Binding Inning, Mode=OneWay}" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" FontFamily="jf-openhuninn-1.1" FontSize="24"
-                       FontWeight="Bold"/>
+            <TextBlock Name="InningCounter" Text="{Binding Inning, Mode=OneWay}" Style="{StaticResource TextStyle}"/>
         </Viewbox>
         <Image Name="HalfInningCounter" Grid.Row="0" Grid.Column="1"
                HorizontalAlignment="Center" VerticalAlignment="Center">
