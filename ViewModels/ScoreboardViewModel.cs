@@ -10,44 +10,74 @@ namespace BaseballScoreboard;
 
 public class ScoreboardViewModel : INotifyPropertyChanged
 {
-    private Scoreboard scoreboard { get; set; } = new();
+    private ScoreboardModel scoreboardModel { get; set; } = new();
 
     public int Inning
     {
-        get => scoreboard.Inning;
+        get => scoreboardModel.Inning;
         set
         {
-            scoreboard.Inning = value;
+            scoreboardModel.Inning = value;
             OnPropertyChanged();
         }
     }
 
     public bool IsTopInning
     {
-        get => scoreboard.IsTopInning;
+        get => scoreboardModel.IsTopInning;
         set
         {
-            scoreboard.IsTopInning = value;
+            scoreboardModel.IsTopInning = value;
             OnPropertyChanged();
         }
     }
 
     public int Team1Score
     {
-        get => scoreboard.Team1Score;
+        get => scoreboardModel.Team1Score;
         set
         {
-            scoreboard.Team1Score = value;
+            scoreboardModel.Team1Score = value;
             OnPropertyChanged();
         }
     }
 
     public int Team2Score
     {
-        get => scoreboard.Team2Score;
+        get => scoreboardModel.Team2Score;
         set
         {
-            scoreboard.Team2Score = value;
+            scoreboardModel.Team2Score = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsFirstBaseOccupied
+    {
+        get => scoreboardModel.IsFirstBaseOccupied;
+        set
+        {
+            scoreboardModel.IsFirstBaseOccupied = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsSecondBaseOccupied
+    {
+        get => scoreboardModel.IsSecondBaseOccupied;
+        set
+        {
+            scoreboardModel.IsSecondBaseOccupied = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsThirdBaseOccupied
+    {
+        get => scoreboardModel.IsThirdBaseOccupied;
+        set
+        {
+            scoreboardModel.IsThirdBaseOccupied = value;
             OnPropertyChanged();
         }
     }
@@ -65,6 +95,12 @@ public class ScoreboardViewModel : INotifyPropertyChanged
     public ICommand IncreaseTeam2Score { get; set; }
 
     public ICommand DecreaseTeam2Score { get; set; }
+
+    public ICommand ToggleFirstBase { get; set; }
+
+    public ICommand ToggleSecondBase { get; set; }
+
+    public ICommand ToggleThirdBase { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -120,5 +156,8 @@ public class ScoreboardViewModel : INotifyPropertyChanged
         DecreaseTeam1Score = new RelayCommand((parameter) => Team1Score--, (parameter) => Team1Score > 0);
         IncreaseTeam2Score = new RelayCommand((parameter) => Team2Score++);
         DecreaseTeam2Score = new RelayCommand((parameter) => Team2Score--, (parameter) => Team2Score > 0);
+        ToggleFirstBase = new RelayCommand((parameter) => IsFirstBaseOccupied = !IsFirstBaseOccupied);
+        ToggleSecondBase = new RelayCommand((parameter) => IsSecondBaseOccupied = !IsSecondBaseOccupied);
+        ToggleThirdBase = new RelayCommand((parameter) => IsThirdBaseOccupied = !IsThirdBaseOccupied);
     }
 }

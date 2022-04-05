@@ -29,8 +29,10 @@
 
   <ItemGroup>
     <None Remove="Assets\BottomInningArrow.png" />
+    <None Remove="Assets\EmptyBase.png" />
     <None Remove="Assets\Icon.jpg" />
     <None Remove="Assets\jf-openhuninn-1.1.ttf" />
+    <None Remove="Assets\OccupiedBase.png" />
     <None Remove="Assets\Team1LogoDropPrompt.png" />
     <None Remove="Assets\Team2LogoDropPrompt.png" />
     <None Remove="Assets\TopInningArrow.png" />
@@ -45,10 +47,16 @@
     <Resource Include="Assets\BottomInningArrow.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\EmptyBase.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Icon.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\jf-openhuninn-1.1.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\OccupiedBase.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Team1LogoDropPrompt.png">
