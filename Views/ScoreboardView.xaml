@@ -20,16 +20,10 @@
         <KeyBinding Key="Z" Command="{Binding ToggleThirdBase}"/>
         <KeyBinding Key="X" Command="{Binding ToggleSecondBase}"/>
         <KeyBinding Key="C" Command="{Binding ToggleFirstBase}"/>
+        <KeyBinding Key="B" Command="{Binding CycleBallCount}"/>
+        <KeyBinding Key="S" Command="{Binding CycleStrikeCount}"/>
+        <KeyBinding Key="O" Command="{Binding CycleOutCount}"/>
     </Window.InputBindings>
-    <Window.Resources>
-        <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="jf-openhuninn-1.1"/>
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-        </Style>
-    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -42,13 +36,22 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontFamily" Value="jf-openhuninn-1.1"/>
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+        </Grid.Resources>
         <Image Name="Team1" Grid.Row="1" Grid.Column="0"
                Drop="TeamLogo_Drop" AllowDrop="True" Source="/Assets/Team1LogoDropPrompt.png"/>
         <Image Name="Team2" Grid.Row="2" Grid.Column="0"
                Drop="TeamLogo_Drop" AllowDrop="True" Source="/Assets/Team2LogoDropPrompt.png"/>
         <Viewbox Grid.Row="0" Grid.Column="0" StretchDirection="Both" Stretch="Uniform"
                  HorizontalAlignment="Right">
-            <TextBlock Name="InningCounter" Text="{Binding Inning}" Style="{StaticResource TextStyle}"/>
+            <Label Name="InningCounter" Content="{Binding Inning}"/>
         </Viewbox>
         <Image Name="HalfInningCounter" Grid.Row="0" Grid.Column="1"
                HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -67,18 +70,18 @@
             </Image.Style>
         </Image>
         <Viewbox Grid.Row="1" Grid.Column="1" StretchDirection="Both" Stretch="Uniform">
-            <TextBlock Name="Team1Score" Text="{Binding Team1Score}" Style="{StaticResource TextStyle}"/>
+            <Label Name="Team1Score" Content="{Binding Team1Score}"/>
         </Viewbox>
         <Viewbox Grid.Row="2" Grid.Column="1" StretchDirection="Both" Stretch="Uniform">
-            <TextBlock Name="Team2Score" Text="{Binding Team2Score}" Style="{StaticResource TextStyle}"/>
+            <Label Name="Team2Score" Content="{Binding Team2Score}"/>
         </Viewbox>
-        <Grid Name="BasesDisplay" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
+        <Grid Name="BaseDisplay" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="2">
+            <Grid Name="FirstBaseSpacer" Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -100,7 +103,7 @@
                     </Image.Style>
                 </Image>
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Name="SecondBaseSpacer" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -122,7 +125,7 @@
                     </Image.Style>
                 </Image>
             </Grid>
-            <Grid Grid.Column="0">
+            <Grid Name="ThirdBaseSpacer" Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -144,6 +147,134 @@
                     </Image.Style>
                 </Image>
             </Grid>
+        </Grid>
+        <Grid Name="BSODisplay" Grid.Row="1" Grid.Column="2"
+              Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style x:Key="ShrinkAndCenter" TargetType="{x:Type Image}">
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <Viewbox Grid.Row="0" Grid.Column="0" Stretch="Uniform" StretchDirection="Both">
+                <Label Content="B" />
+            </Viewbox>
+            <Image Grid.Row="0" Grid.Column="1">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BallCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=1}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/GreenCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Grid.Row="0" Grid.Column="2">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BallCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=2}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/GreenCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Grid.Row="0" Grid.Column="3">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding BallCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=3}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/GreenCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Viewbox Grid.Row="1" Grid.Column="0" Stretch="Uniform" StretchDirection="Both">
+                <Label Content="S" />
+            </Viewbox>
+            <Image Grid.Row="1" Grid.Column="1">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StrikeCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=1}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/YellowCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Grid.Row="1" Grid.Column="2">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding StrikeCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=2}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/YellowCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Viewbox Grid.Row="2" Grid.Column="0" Stretch="Uniform" StretchDirection="Both">
+                <Label Content="O" />
+            </Viewbox>
+            <Image Grid.Row="2" Grid.Column="1">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OutCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=1}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/RedCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Grid.Row="2" Grid.Column="2">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
+                        <Setter Property="Source" Value="/Assets/BlackCircle.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding OutCount, Converter={StaticResource LargerThanOrEqualTo}, ConverterParameter=2}"
+                                         Value="True">
+                                <Setter Property="Source" Value="/Assets/RedCircle.png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
         </Grid>
     </Grid>
 </Window>

@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace BaseballScoreboard;
 
-public class ScoreboardViewModel : INotifyPropertyChanged
+internal class ScoreboardViewModel : INotifyPropertyChanged
 {
     private ScoreboardModel scoreboardModel { get; set; } = new();
 
@@ -82,6 +82,36 @@ public class ScoreboardViewModel : INotifyPropertyChanged
         }
     }
 
+    public int BallCount
+    {
+        get => scoreboardModel.BallCount;
+        set
+        {
+            scoreboardModel.BallCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int StrikeCount
+    {
+        get => scoreboardModel.StrikeCount;
+        set
+        {
+            scoreboardModel.StrikeCount = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int OutCount
+    {
+        get => scoreboardModel.OutCount;
+        set
+        {
+            scoreboardModel.OutCount = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ICommand IncreaseInningCounter { get; set; }
 
     public ICommand DecreaseInningCounter { get; set; }
@@ -101,6 +131,12 @@ public class ScoreboardViewModel : INotifyPropertyChanged
     public ICommand ToggleSecondBase { get; set; }
 
     public ICommand ToggleThirdBase { get; set; }
+
+    public ICommand CycleBallCount { get; set; }
+
+    public ICommand CycleStrikeCount { get; set; }
+
+    public ICommand CycleOutCount { get; set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -159,5 +195,44 @@ public class ScoreboardViewModel : INotifyPropertyChanged
         ToggleFirstBase = new RelayCommand((parameter) => IsFirstBaseOccupied = !IsFirstBaseOccupied);
         ToggleSecondBase = new RelayCommand((parameter) => IsSecondBaseOccupied = !IsSecondBaseOccupied);
         ToggleThirdBase = new RelayCommand((parameter) => IsThirdBaseOccupied = !IsThirdBaseOccupied);
+        CycleBallCount = new RelayCommand(
+            (parameter) =>
+            {
+                if (BallCount < 3)
+                {
+                    BallCount++;
+                }
+                else
+                {
+                    BallCount = 0;
+                }
+            }
+        );
+        CycleStrikeCount = new RelayCommand(
+            (parameter) =>
+            {
+                if (StrikeCount < 2)
+                {
+                    StrikeCount++;
+                }
+                else
+                {
+                    StrikeCount = 0;
+                }
+            }
+        );
+        CycleOutCount = new RelayCommand(
+            (parameter) =>
+            {
+                if (OutCount < 2)
+                {
+                    OutCount++;
+                }
+                else
+                {
+                    OutCount = 0;
+                }
+            }
+        );
     }
 }

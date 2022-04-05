@@ -1,6 +1,6 @@
 namespace BaseballScoreboard;
 
-public class ScoreboardModel
+internal class ScoreboardModel
 {
     public int Inning { get; set; } = 1;
 
@@ -15,4 +15,10 @@ public class ScoreboardModel
     public bool IsSecondBaseOccupied { get; set; } = false;
 
     public bool IsThirdBaseOccupied { get; set; } = false;
+
+    public int BallCount { get; set; } = 0;
+
+    public int StrikeCount { get; set; } = 0;
+
+    public int OutCount { get; set; } = 0;
 }
