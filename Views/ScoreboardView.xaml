@@ -24,6 +24,20 @@
         <KeyBinding Key="S" Command="{Binding CycleStrikeCount}"/>
         <KeyBinding Key="O" Command="{Binding CycleOutCount}"/>
     </Window.InputBindings>
+    <Window.Resources>
+        <Style x:Key="ShrinkAndCenter" TargetType="{x:Type Image}">
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -54,9 +68,9 @@
             <Label Name="InningCounter" Content="{Binding Inning}"/>
         </Viewbox>
         <Image Name="HalfInningCounter" Grid.Row="0" Grid.Column="1"
-               HorizontalAlignment="Center" VerticalAlignment="Center">
+               HorizontalAlignment="Left" VerticalAlignment="Center">
             <Image.Style>
-                <Style TargetType="{x:Type Image}">
+                <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ShrinkAndCenter}">
                     <Setter Property="Source" Value="/Assets/TopInningArrow.png"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsTopInning}" Value="True">
@@ -161,20 +175,6 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style x:Key="ShrinkAndCenter" TargetType="{x:Type Image}">
-                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="RenderTransform">
-                        <Setter.Value>
-                            <TransformGroup>
-                                <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                            </TransformGroup>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Grid.Resources>
             <Viewbox Grid.Row="0" Grid.Column="0" Stretch="Uniform" StretchDirection="Both">
                 <Label Content="B" />
             </Viewbox>
