@@ -2,6 +2,8 @@
 
 An simple application that acts as a scoreboard for baseball games. Can be used for livestreams of baseball games.
 
+To understand to making of this project, please refer to [this PDF](BaseballScoreboard.pdf).
+
 ## Controls
 
 Key        | Description
